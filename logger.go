@@ -2,6 +2,16 @@ package logger
 
 import "context"
 
+// LogLevel represents the severity of a log message.
+type LogLevel int
+
+const (
+	LogLevelDebug LogLevel = iota
+	LogLevelInfo
+	LogLevelWarn
+	LogLevelError
+)
+
 // Logger defines the logging interface.
 // A second PR will provide a zap-based implementation.
 type Logger interface {
