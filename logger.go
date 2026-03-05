@@ -2,6 +2,10 @@ package logger
 
 import "context"
 
+// EnricherFunc extracts additional log fields from a context.
+// The returned slice must be even-length KV pairs, e.g. ("key1", val1, "key2", val2).
+type EnricherFunc func(ctx context.Context) []any
+
 // LogLevel represents the severity of a log message.
 type LogLevel int
 
