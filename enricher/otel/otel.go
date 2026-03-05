@@ -1,15 +1,16 @@
-package logger
+package otel
 
 import (
 	"context"
 
+	logger "github.com/z9905080/go-logger"
 	"go.opentelemetry.io/otel/trace"
 )
 
-// OtelEnricher returns an EnricherFunc that extracts the OpenTelemetry
+// Enricher returns a logger.EnricherFunc that extracts the OpenTelemetry
 // trace ID and span ID from the context and appends them as log fields.
-// Fields are only appended when a valid, sampled span is present.
-func OtelEnricher() EnricherFunc {
+// Fields are only appended when a valid span is present.
+func Enricher() logger.EnricherFunc {
 	return func(ctx context.Context) []any {
 		sc := trace.SpanFromContext(ctx).SpanContext()
 		if !sc.IsValid() {
