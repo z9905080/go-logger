@@ -13,12 +13,13 @@ import (
 func Enricher() logger.EnricherFunc {
 	return func(ctx context.Context) []any {
 		sc := trace.SpanFromContext(ctx).SpanContext()
-		if !sc.IsValid() {
-			return nil
+		var fields []any
+		if sc.HasTraceID() {
+			fields = append(fields, "trace_id", sc.TraceID().String())
 		}
-		return []any{
-			"trace_id", sc.TraceID().String(),
-			"span_id", sc.SpanID().String(),
+		if sc.HasSpanID() {
+			fields = append(fields, "span_id", sc.SpanID().String())
 		}
+		return fields
 	}
 }
